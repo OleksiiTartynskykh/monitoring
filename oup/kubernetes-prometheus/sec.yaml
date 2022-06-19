@@ -1,9 +1,0 @@
-apiVersion: v1
-data:
-  auth: YWRtaW46JGFwcjEkYmhaVjY1Rm0kWHBrMlZhZlhUdDh1eEhhaFA2ZUVpLwo=
-kind: Secret
-metadata:
-  name: mon-auth
-  namespace: monitoring
-#  uid: c098766c-46bd-4f6c-ad74-ab7796e28ac3
-type: Opaque

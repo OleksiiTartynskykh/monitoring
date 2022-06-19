@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0,::/0
+  creationTimestamp: "2021-12-08T12:07:38Z"
+  generateName: cm-acme-http-solver-
+  generation: 1
+  labels:
+    certmanager.k8s.io/acme-http-domain: "795086700"
+    certmanager.k8s.io/acme-http-token: "1295126254"
+    certmanager.k8s.io/acme-http01-solver: "true"
+  name: cm-acme-http-solver-mkgdd
+  namespace: monitoring
+  ownerReferences:
+  - apiVersion: certmanager.k8s.io/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Challenge
+    name: prometheus-tls-3219251483-0
+    uid: bbbd2e2e-cd09-495d-9695-426cbdb29e16
+  resourceVersion: "679915588"
+  uid: cca72170-9565-428c-a5f3-80a0a8f1afdc
+spec:
+  rules:
+  - host: prometheus.development.inceptionxr.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: cm-acme-http-solver-hkrzd
+            port:
+              number: 8089
+        path: /.well-known/acme-challenge/qxsPZx-zo79prBOj48R-_shkA1qnOON7ljpn8dUuIm8
+        pathType: ImplementationSpecific
+status:
+  loadBalancer:
+    ingress:
+    - ip: 104.154.87.56

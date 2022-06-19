@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"certmanager.k8s.io/cluster-issuer":"letsencrypt","kubernetes.io/ingress.class":"monitoring"},"name":"grafana-ingress-monitoring","namespace":"monitoring"},"spec":{"rules":[{"host":"grafana.bookful.inceptionxr.com","http":{"paths":[{"backend":{"service":{"name":"grafana-helm","port":{"number":3000}}},"path":"/","pathType":"ImplementationSpecific"}]}}],"tls":[{"hosts":["grafana.bookful.inceptionxr.com"],"secretName":"grafana-tls"}]}}
+    kubernetes.io/ingress.class: monitoring
+    kubernetes.io/ingress.global-static-ip-name: ingress-nginx-monitoring
+  creationTimestamp: "2021-12-10T08:02:15Z"
+  generation: 3
+  name: grafana-ingress-monitoring
+  namespace: monitoring
+  resourceVersion: "679915594"
+  uid: 8085424e-4506-4f1f-9f83-d2cd7e61598b
+spec:
+  rules:
+  - host: grafana-new.bookful.inceptionxr.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: grafana
+            port:
+              number: 3000
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - grafana-new.bookful.inceptionxr.com
+    secretName: grafana-tls
+status:
+  loadBalancer: {}

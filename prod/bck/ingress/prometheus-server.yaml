@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: monitoring
+    meta.helm.sh/release-name: prometheus
+    meta.helm.sh/release-namespace: monitoring
+    nginx.ingress.kubernetes.io/auth-realm: Authentication Required
+    nginx.ingress.kubernetes.io/auth-secret: prometheus-auth
+    nginx.ingress.kubernetes.io/auth-type: basic
+  creationTimestamp: "2021-05-20T11:51:36Z"
+  generation: 1
+  labels:
+    app: prometheus
+    app.kubernetes.io/managed-by: Helm
+    chart: prometheus-14.0.0
+    component: server
+    heritage: Helm
+    release: prometheus
+  name: prometheus-server
+  namespace: monitoring
+  resourceVersion: "679915597"
+  uid: ae2b5dd8-761d-43e5-a9f0-c3808816048c
+spec:
+  rules:
+  - host: prometheus.bookful.inceptionxr.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: prometheus-server
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - prometheus.bookful.inceptionxr.com
+    secretName: prometheus-server-tls
+status:
+  loadBalancer:
+    ingress:
+    - ip: 104.154.87.56

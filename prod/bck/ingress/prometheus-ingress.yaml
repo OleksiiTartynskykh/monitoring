@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    certmanager.k8s.io/cluster-issuer: letsencrypt
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"extensions/v1beta1","kind":"Ingress","metadata":{"annotations":{"certmanager.k8s.io/cluster-issuer":"letsencrypt","kubernetes.io/ingress.class":"nginx","nginx.ingress.kubernetes.io/auth-realm":"Authentication Required","nginx.ingress.kubernetes.io/auth-secret":"prometheus-auth","nginx.ingress.kubernetes.io/auth-type":"basic"},"name":"prometheus-ingress","namespace":"monitoring"},"spec":{"rules":[{"host":"prometheus.development.inceptionxr.com","http":{"paths":[{"backend":{"serviceName":"prometheus-svc","servicePort":80},"path":"/"}]}}],"tls":[{"hosts":["prometheus.development.inceptionxr.com"],"secretName":"prometheus-tls"}]}}
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-realm: Authentication Required
+    nginx.ingress.kubernetes.io/auth-secret: prometheus-auth
+    nginx.ingress.kubernetes.io/auth-type: basic
+  creationTimestamp: "2021-12-08T12:07:36Z"
+  generation: 1
+  name: prometheus-ingress
+  namespace: monitoring
+  resourceVersion: "679915595"
+  uid: 2a6df9fa-5c97-4c93-8938-3f0bad97d4d2
+spec:
+  rules:
+  - host: prometheus.development.inceptionxr.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: prometheus-svc
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - prometheus.development.inceptionxr.com
+    secretName: prometheus-tls
+status:
+  loadBalancer:
+    ingress:
+    - ip: 104.154.87.56

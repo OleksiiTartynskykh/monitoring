@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "4"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"DaemonSet","metadata":{"annotations":{},"name":"node-exporter","namespace":"monitoring"},"spec":{"selector":{"matchLabels":{"app":"node-exporter"}},"template":{"metadata":{"annotations":{"prometheus.io/port":"9100","prometheus.io/scrape":"true"},"labels":{"app":"node-exporter"}},"spec":{"containers":[{"image":"quay.io/prometheus/node-exporter:v0.18.1","name":"node-exporter","ports":[{"containerPort":9100}],"resources":{"limits":{"cpu":0.1,"memory":"30Mi"},"requests":{"cpu":0.01,"memory":"12Mi"}},"securityContext":{"privileged":true},"volumeMounts":[{"mountPath":"/host/proc","name":"proc-fs"},{"mountPath":"/host/sys","name":"sys-fs"},{"mountPath":"/rootfs","name":"root-fs"}]}],"hostNetwork":true,"hostPID":true,"volumes":[{"hostPath":{"path":"/proc"},"name":"proc-fs"},{"hostPath":{"path":"/sys"},"name":"sys-fs"},{"hostPath":{"path":"/"},"name":"root-fs"}]}}}}
+  creationTimestamp: "2018-11-20T10:33:03Z"
+  generation: 4
+  name: node-exporter
+  namespace: monitoring
+  resourceVersion: "738598090"
+  uid: a90e44fd-ecaf-11e8-90c1-42010a800196
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: node-exporter
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9100"
+        prometheus.io/scrape: "true"
+      creationTimestamp: null
+      labels:
+        app: node-exporter
+    spec:
+      containers:
+      - image: quay.io/prometheus/node-exporter:v0.18.1
+        imagePullPolicy: IfNotPresent
+        name: node-exporter
+        ports:
+        - containerPort: 9100
+          hostPort: 9100
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 30Mi
+          requests:
+            cpu: 10m
+            memory: 12Mi
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /host/proc
+          name: proc-fs
+        - mountPath: /host/sys
+          name: sys-fs
+        - mountPath: /rootfs
+          name: root-fs
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /proc
+          type: ""
+        name: proc-fs
+      - hostPath:
+          path: /sys
+          type: ""
+        name: sys-fs
+      - hostPath:
+          path: /
+          type: ""
+        name: root-fs
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 3
+  desiredNumberScheduled: 3
+  numberAvailable: 3
+  numberMisscheduled: 0
+  numberReady: 3
+  observedGeneration: 4
+  updatedNumberScheduled: 3

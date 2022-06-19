@@ -26,3 +26,10 @@ spec:
     - hosts:
         - prometheus-bookful-development.inceptionxr.com
       secretName: prom-tls
+
+
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/baremetal/deploy.yaml
+#clean ns after delete
+#kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n all
+#cloud ing
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
